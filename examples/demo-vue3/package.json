@@ -1,0 +1,21 @@
+{
+    "name": "demo-vue3",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "vue": "^3.0.0",
+        "@gray0128/agent-component-vue3": "workspace:*"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^5.0.0",
+        "typescript": "^5.0.0",
+        "vite": "^5.0.0",
+        "vue-tsc": "^2.0.0"
+    }
+}

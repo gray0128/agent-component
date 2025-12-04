@@ -1,0 +1,44 @@
+{
+    "name": "@gray0128/agent-component-react",
+    "version": "1.0.0",
+    "description": "跨框架智能体入口组件 - React 适配包",
+    "type": "module",
+    "main": "./src/index.ts",
+    "module": "./src/index.ts",
+    "types": "./src/index.ts",
+    "exports": {
+        ".": {
+            "import": "./src/index.ts",
+            "types": "./src/index.ts"
+        }
+    },
+    "files": [
+        "dist",
+        "src"
+    ],
+    "scripts": {
+        "build": "vite build"
+    },
+    "keywords": [
+        "agent",
+        "component",
+        "react"
+    ],
+    "author": "gray0128",
+    "license": "MIT",
+    "peerDependencies": {
+        "react": ">=16.8.0",
+        "react-dom": ">=16.8.0"
+    },
+    "dependencies": {
+        "@gray0128/agent-component-core": "workspace:*"
+    },
+    "devDependencies": {
+        "@types/react": "^18.0.0",
+        "react": "^18.0.0",
+        "react-dom": "^18.0.0",
+        "typescript": "^5.0.0",
+        "vite": "^5.0.0",
+        "vite-plugin-dts": "^3.0.0"
+    }
+}
