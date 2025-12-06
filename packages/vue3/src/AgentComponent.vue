@@ -9,6 +9,7 @@ defineProps<{
   phone?: string;
   hoverDelay?: number;
   triggerText?: string;
+  storageKey?: string;
 }>();
 
 const emit = defineEmits<{
@@ -36,6 +37,7 @@ const handleComponentClosed = () => {
     :phone="phone"
     :hoverDelay="hoverDelay"
     :triggerText="triggerText"
+    :storageKey="storageKey"
     @agent-selected="handleAgentSelected"
     @component-closed="handleComponentClosed"
   >

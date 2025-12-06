@@ -169,6 +169,12 @@ export class AgentEntry extends LitElement {
   @property({ type: String })
   confirmText = '确定要关闭助手吗？关闭后今天将不再显示。';
 
+  @property({ type: Boolean })
+  autoHide = false;
+
+  @property({ type: String })
+  storageKey = STORAGE_KEY;
+
   @state()
   private _isOpen = false;
 
@@ -194,6 +200,52 @@ export class AgentEntry extends LitElement {
     super.connectedCallback();
     this._checkHiddenStatus();
     this._addDragListeners();
+
+    // Eager fetch if autoHide is enabled and we have an API URL
+    if (this.autoHide && this.apiUrl) {
+      this._fetchAgents();
+    }
+  }
+
+  // Handle visibility updates when properties change
+  updated(changedProperties: Map<string, any>) {
+    super.updated(changedProperties);
+
+    if (changedProperties.has('autoHide') ||
+      changedProperties.has('agents') ||
+      changedProperties.has('_fetchedAgents') ||
+      changedProperties.has('apiUrl')) {
+      this._updateVisibility();
+    }
+  }
+
+  private _updateVisibility() {
+    // 1. Check if manually closed by user (highest priority)
+    const hiddenDate = localStorage.getItem(this.storageKey);
+    if (hiddenDate) {
+      const today = new Date().toDateString();
+      if (hiddenDate === today) {
+        this.hidden = true;
+        return;
+      } else {
+        // Expired, clear it
+        localStorage.removeItem(this.storageKey);
+      }
+    }
+
+    // 2. Check autoHide logic
+    if (this.autoHide) {
+      const list = this._getAgentList();
+      // Hide if list is empty. 
+      // Note: If loading, list might be empty. 
+      // Decision: Hide while loading if list is empty? Yes, to avoid flicker of empty state.
+      // But if we want to show a spinner, we shouldn't hide. 
+      // However, this is the ENTRY point. Usually we don't show spinner on the trigger itself before it's hovered?
+      // If autoHide is true, we assume user doesn't want to see it unless there IS something.
+      this.hidden = list.length === 0;
+    } else {
+      this.hidden = false;
+    }
   }
 
   disconnectedCallback() {
@@ -216,19 +268,20 @@ export class AgentEntry extends LitElement {
   }
 
   private _checkHiddenStatus() {
-    const hiddenDate = localStorage.getItem(STORAGE_KEY);
+    const hiddenDate = localStorage.getItem(this.storageKey);
     if (hiddenDate) {
       const today = new Date().toDateString();
       if (hiddenDate === today) {
         this.hidden = true;
       } else {
-        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(this.storageKey);
       }
     }
   }
 
   private async _fetchAgents() {
-    if (!this.apiUrl || this._hasFetched) return;
+    if (!this.apiUrl) return;
+    if (this._loading) return;
 
     this._loading = true;
     this._hasFetched = true;
@@ -255,7 +308,7 @@ export class AgentEntry extends LitElement {
     if (this._hoverTimeout) window.clearTimeout(this._hoverTimeout);
     this._isOpen = true;
 
-    if (this.apiUrl && !this._hasFetched) {
+    if (this.apiUrl) {
       this._fetchAgents();
     }
   }
@@ -276,7 +329,7 @@ export class AgentEntry extends LitElement {
   private _confirmClose() {
     this._showConfirm = false;
     const today = new Date().toDateString();
-    localStorage.setItem(STORAGE_KEY, today);
+    localStorage.setItem(this.storageKey, today);
     this.hidden = true;
 
     this.dispatchEvent(new CustomEvent('component-closed', {

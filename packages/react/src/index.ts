@@ -10,6 +10,7 @@ declare global {
                 hoverDelay?: number;
                 apiUrl?: string;
                 triggerText?: string;
+                storageKey?: string;
             };
         }
     }
@@ -21,6 +22,7 @@ export interface AgentComponentProps {
     phone?: string;
     hoverDelay?: number;
     triggerText?: string;
+    storageKey?: string;
     onAgentSelected?: (agent: Agent) => void;
     onComponentClosed?: () => void;
     children?: React.ReactNode;
@@ -33,7 +35,9 @@ export const AgentComponent = forwardRef<HTMLElement, AgentComponentProps>(({
     apiUrl,
     phone,
     hoverDelay,
+    hoverDelay,
     triggerText,
+    storageKey,
     onAgentSelected,
     onComponentClosed,
     children,
@@ -84,6 +88,7 @@ export const AgentComponent = forwardRef<HTMLElement, AgentComponentProps>(({
     phone = { phone }
     hoverDelay = { hoverDelay }
     triggerText = { triggerText }
+    storageKey = { storageKey }
     class={ className }
     style = { style }
         >

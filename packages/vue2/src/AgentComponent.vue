@@ -6,6 +6,7 @@
     :phone="phone"
     :hoverDelay="hoverDelay"
     :triggerText="triggerText"
+    :storageKey="storageKey"
     @agent-selected="handleAgentSelected"
     @component-closed="handleComponentClosed"
   >
@@ -40,6 +41,10 @@ export default {
     triggerText: {
       type: String,
       default: 'AI助手'
+    },
+    storageKey: {
+      type: String,
+      default: undefined
     }
   },
   methods: {
