@@ -235,7 +235,6 @@ export class AgentPanel extends LitElement {
       
       <div class="footer">
         <div class="phone">
-          <span>📞</span>
           <a href="tel:${this.phone}">${this.phone}</a>
         </div>
         <div class="close-btn" @click=${this._handleClose}>
