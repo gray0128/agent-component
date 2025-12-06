@@ -11,6 +11,7 @@ declare global {
                 apiUrl?: string;
                 triggerText?: string;
                 storageKey?: string;
+                autoHide?: boolean;
             };
         }
     }
@@ -22,6 +23,7 @@ export interface AgentComponentProps {
     phone?: string;
     hoverDelay?: number;
     triggerText?: string;
+    autoHide?: boolean;
     storageKey?: string;
     onAgentSelected?: (agent: Agent) => void;
     onComponentClosed?: () => void;
@@ -35,8 +37,8 @@ export const AgentComponent = forwardRef<HTMLElement, AgentComponentProps>(({
     apiUrl,
     phone,
     hoverDelay,
-    hoverDelay,
     triggerText,
+    autoHide,
     storageKey,
     onAgentSelected,
     onComponentClosed,
@@ -55,10 +57,12 @@ export const AgentComponent = forwardRef<HTMLElement, AgentComponentProps>(({
     }, [agents]);
 
     useEffect(() => {
-        if (elementRef.current && apiUrl) {
-            (elementRef.current as any).apiUrl = apiUrl;
+        if (elementRef.current) {
+            const el = elementRef.current as any;
+            if (apiUrl !== undefined) el.apiUrl = apiUrl;
+            if (autoHide !== undefined) el.autoHide = autoHide;
         }
-    }, [apiUrl]);
+    }, [apiUrl, autoHide]);
 
     useEffect(() => {
         const element = elementRef.current;
@@ -84,17 +88,18 @@ export const AgentComponent = forwardRef<HTMLElement, AgentComponentProps>(({
 
     return (
         <agent-entry
-      ref = { elementRef }
+            ref = { elementRef }
     phone = { phone }
     hoverDelay = { hoverDelay }
     triggerText = { triggerText }
+    autoHide = { autoHide }
     storageKey = { storageKey }
     class={ className }
     style = { style }
         >
         { children && <div slot="trigger" > { children } </div>
 }
-    </agent-entry>
+        </agent-entry>
 );
 });
 

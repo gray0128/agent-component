@@ -7,6 +7,7 @@
     :hoverDelay="hoverDelay"
     :triggerText="triggerText"
     :storageKey="storageKey"
+    :autoHide="autoHide"
     @agent-selected="handleAgentSelected"
     @component-closed="handleComponentClosed"
   >
@@ -45,6 +46,10 @@ export default {
     storageKey: {
       type: String,
       default: undefined
+    },
+    autoHide: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

@@ -10,6 +10,7 @@ defineProps<{
   hoverDelay?: number;
   triggerText?: string;
   storageKey?: string;
+  autoHide?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -38,6 +39,7 @@ const handleComponentClosed = () => {
     :hoverDelay="hoverDelay"
     :triggerText="triggerText"
     :storageKey="storageKey"
+    :autoHide="autoHide ?? false"
     @agent-selected="handleAgentSelected"
     @component-closed="handleComponentClosed"
   >
