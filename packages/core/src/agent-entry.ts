@@ -175,6 +175,15 @@ export class AgentEntry extends LitElement {
   @property({ type: String })
   storageKey = STORAGE_KEY;
 
+  @property({ type: String })
+  iconType: 'emoji' | 'image' | 'font' | 'none' = 'emoji';
+
+  @property({ type: String })
+  icon = '🤖';
+
+  @property({ type: String })
+  triggerStyle = '';
+
   @state()
   private _isOpen = false;
 
@@ -405,19 +414,34 @@ export class AgentEntry extends LitElement {
     // Here we rely on hover for opening, so no click handler needed on trigger for opening.
   };
 
+  private _renderIcon() {
+    switch (this.iconType) {
+      case 'image':
+        return html`<img src="${this.icon}" class="trigger-icon" style="width: 20px; height: 20px; object-fit: contain;" alt="icon" />`;
+      case 'font':
+        return html`<i class="${this.icon} trigger-icon"></i>`;
+      case 'none':
+        return null;
+      case 'emoji':
+      default:
+        return html`<span class="trigger-icon">${this.icon}</span>`;
+    }
+  }
+
   render() {
     const agentList = this._getAgentList();
 
     return html`
       <div 
         class="trigger"
+        style="${this.triggerStyle}"
         @mouseenter=${this._handleMouseEnter}
         @mouseleave=${this._handleMouseLeave}
         @mousedown=${this._handleDragStart}
         @touchstart=${this._handleDragStart}
       >
         <slot name="trigger">
-          <span class="trigger-icon">🤖</span>
+          ${this._renderIcon()}
           <span>${this.triggerText}</span>
         </slot>
       </div>

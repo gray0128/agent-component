@@ -12,6 +12,9 @@ declare global {
                 triggerText?: string;
                 storageKey?: string;
                 autoHide?: boolean;
+                iconType?: 'emoji' | 'image' | 'font' | 'none';
+                icon?: string;
+                triggerStyle?: string;
             };
         }
     }
@@ -24,7 +27,11 @@ export interface AgentComponentProps {
     hoverDelay?: number;
     triggerText?: string;
     autoHide?: boolean;
+
     storageKey?: string;
+    iconType?: 'emoji' | 'image' | 'font' | 'none';
+    icon?: string;
+    triggerStyle?: string;
     onAgentSelected?: (agent: Agent) => void;
     onComponentClosed?: () => void;
     children?: React.ReactNode;
@@ -39,7 +46,11 @@ export const AgentComponent = forwardRef<HTMLElement, AgentComponentProps>(({
     hoverDelay,
     triggerText,
     autoHide,
+
     storageKey,
+    iconType,
+    icon,
+    triggerStyle,
     onAgentSelected,
     onComponentClosed,
     children,
@@ -88,19 +99,23 @@ export const AgentComponent = forwardRef<HTMLElement, AgentComponentProps>(({
 
     return (
         <agent-entry
-            ref = { elementRef }
-    phone = { phone }
-    hoverDelay = { hoverDelay }
-    triggerText = { triggerText }
-    autoHide = { autoHide }
-    storageKey = { storageKey }
-    class={ className }
-    style = { style }
+            ref={elementRef}
+            phone={phone}
+            hoverDelay={hoverDelay}
+            triggerText={triggerText}
+            autoHide={autoHide}
+
+            storageKey={storageKey}
+            iconType={iconType}
+            icon={icon}
+            triggerStyle={triggerStyle}
+            className={className}
+            style={style}
         >
-        { children && <div slot="trigger" > { children } </div>
-}
+            {children && <div slot="trigger" > {children} </div>
+            }
         </agent-entry>
-);
+    );
 });
 
 AgentComponent.displayName = 'AgentComponent';

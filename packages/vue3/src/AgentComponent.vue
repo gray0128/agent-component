@@ -11,6 +11,9 @@ defineProps<{
   triggerText?: string;
   storageKey?: string;
   autoHide?: boolean;
+  iconType?: 'emoji' | 'image' | 'font' | 'none';
+  icon?: string;
+  triggerStyle?: string;
 }>();
 
 const emit = defineEmits<{
@@ -40,6 +43,9 @@ const handleComponentClosed = () => {
     :triggerText="triggerText"
     :storageKey="storageKey"
     :autoHide="autoHide ?? false"
+    :iconType="iconType"
+    :icon="icon"
+    :triggerStyle="triggerStyle"
     @agent-selected="handleAgentSelected"
     @component-closed="handleComponentClosed"
   >

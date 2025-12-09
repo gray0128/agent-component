@@ -22,7 +22,11 @@ const handleSelected = (agent: any) => {
     <p>鼠标移到右侧"AI助手"标签查看效果</p>
     <AgentComponent 
       :agents="agents" 
-      phone="400-000-1111" 
+      phone="400-000-1111"
+      iconType="emoji"
+      icon="🚀"
+      triggerText="智能助理"
+      triggerStyle="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"
       @agent-selected="handleSelected" 
     />
   </div>

@@ -8,6 +8,9 @@
     :triggerText="triggerText"
     :storageKey="storageKey"
     :autoHide="autoHide"
+    :iconType="iconType"
+    :icon="icon"
+    :triggerStyle="triggerStyle"
     @agent-selected="handleAgentSelected"
     @component-closed="handleComponentClosed"
   >
@@ -50,6 +53,19 @@ export default {
     autoHide: {
       type: Boolean,
       default: false
+    },
+    iconType: {
+      type: String,
+      default: 'emoji',
+      validator: value => ['emoji', 'image', 'font', 'none'].includes(value)
+    },
+    icon: {
+      type: String,
+      default: '🤖'
+    },
+    triggerStyle: {
+      type: String,
+      default: ''
     }
   },
   methods: {

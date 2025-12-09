@@ -39,6 +39,10 @@ const handleSelect = (agent) => {
     :autoHide="true"
     storageKey="my-app-agent-closed"
     phone="400-000-1111"
+    iconType="emoji"
+    icon="🚀"
+    triggerText="智能助理"
+    triggerStyle="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"
     @agent-selected="handleSelect"
   />
 </template>
@@ -60,6 +64,9 @@ function App() {
       autoHide={true}
       storageKey="my-app-agent-closed"
       phone="400-000-1111"
+      iconType="image"
+      icon="https://example.com/icon.png"
+      triggerText="AI助手"
       onAgentSelected={(agent) => window.open(agent.url)}
     />
   );
@@ -77,6 +84,9 @@ function App() {
 | `apiUrl` | `string` | `''` | 接口地址 |
 | `phone` | `string` | `'400-XXX-XXXX'` | 客服电话 |
 | `triggerText` | `string` | `'AI助手'` | 触发器文字 |
+| `iconType` | `'emoji' \| 'image' \| 'font' \| 'none'` | `'emoji'` | 图标类型 |
+| `icon` | `string` | `'🤖'` | 图标内容（emoji 字符、图片 URL 或 font icon 类名） |
+| `triggerStyle` | `string` | `''` | 触发器自定义样式（CSS 字符串） |
 | `autoHide` | `boolean` | `false` | 无数据时是否自动隐藏 |
 | `storageKey` | `string` | `'agent-component-hidden-date'` | 手动关闭状态的存储 Key，用于隔离不同应用 |
 | `confirmText` | `string` | `'确定要关闭助手吗？...'`| 关闭时的确认提示文本 |
