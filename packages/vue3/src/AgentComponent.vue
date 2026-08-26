@@ -1,20 +1,51 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, type PropType } from 'vue';
 import '@gray0128/agent-component-core';
 import type { Agent } from '@gray0128/agent-component-core';
 
-defineProps<{
-  agents?: Agent[];
-  apiUrl?: string;
-  phone?: string;
-  hoverDelay?: number;
-  triggerText?: string;
-  storageKey?: string;
-  autoHide?: boolean;
-  iconType?: 'emoji' | 'image' | 'font' | 'none';
-  icon?: string;
-  triggerStyle?: string;
-}>();
+defineProps({
+  agents: {
+    type: Array as PropType<Agent[]>,
+    default: () => []
+  },
+  apiUrl: {
+    type: String,
+    default: ''
+  },
+  phone: {
+    type: String,
+    default: '400-XXX-XXXX'
+  },
+  hoverDelay: {
+    type: Number,
+    default: 200
+  },
+  triggerText: {
+    type: String,
+    default: 'AI助手'
+  },
+  storageKey: {
+    type: String,
+    default: undefined
+  },
+  autoHide: {
+    type: Boolean,
+    default: false
+  },
+  iconType: {
+    type: String as PropType<'emoji' | 'image' | 'font' | 'none'>,
+    default: 'emoji',
+    validator: (value: string) => ['emoji', 'image', 'font', 'none'].includes(value)
+  },
+  icon: {
+    type: String,
+    default: '🤖'
+  },
+  triggerStyle: {
+    type: String,
+    default: ''
+  }
+});
 
 const emit = defineEmits<{
   (e: 'agent-selected', agent: Agent): void;
@@ -36,13 +67,13 @@ const handleComponentClosed = () => {
 <template>
   <agent-entry
     ref="entryRef"
-    :agents="agents"
+    :agents.prop="agents"
     :apiUrl="apiUrl"
     :phone="phone"
     :hoverDelay="hoverDelay"
     :triggerText="triggerText"
-    :storageKey="storageKey"
-    :autoHide="autoHide ?? false"
+    :storageKey.attr="storageKey"
+    :autoHide="autoHide"
     :iconType="iconType"
     :icon="icon"
     :triggerStyle="triggerStyle"
